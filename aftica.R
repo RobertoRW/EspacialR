@@ -100,11 +100,34 @@ plot(Kenv2015, main="Funcion K para conflictos durante 2015")
 mserw = bw.diggle(africa.1997.pppu)
 bw = as.numeric(mserw)
 bw
-plot(density(redwood, bw=bw, kernel='gaussian'), main="Densidad con kernel Gaussiano para 1997")
+plot(density(africa.1997.pppu, bw=bw, kernel='gaussian'), main="Densidad con kernel Gaussiano para 1997")
 
 mserw = bw.diggle(africa.2015.pppu)
 bw = as.numeric(mserw)
 bw
-plot(density(redwood, bw=bw, kernel='gaussian'), main="Densidad con kernel Gaussiano para 2015")
+plot(density(africa.2015.pppu, bw=bw, kernel='gaussian'), main="Densidad con kernel Gaussiano para 2015")
+
+
+
+# Modelado
+fit1997 = ppm(africa.1997.pppu, ~ x + y)
+fit1997poly = ppm(africa.1997.pppu, ~polynom(x, y, 2))
+fit2015 = ppm(africa.2015.pppu, ~ x + y)
+fit2015poly = ppm(africa.2015.pppu, ~polynom(x, y, 2))
+
+plot(fit1997, main="Tendencia de eventos violentos en 1997, Modelo Lineal", pause=FALSE, se=FALSE)
+plot(fit1997poly, main="Tendencia de eventos violentos en 2017, Modelo Polinomial de grado 2", se=FALSE)
+AIC(fit1997)
+AIC(fit2015)
+
+plot(fit2015, main="Tendencia de eventos violentos en 2015, Modelo Lineal", se=FALSE)
+plot(fit2015poly, main="Tendencia de eventos violentos en 2015, Modelo Polinomial de grado 2", se=FALSE)
+AIC(fit2015)
+AIC(fit2015poly)
+
+
+fit2015poly5 = ppm(africa.2015.pppu, ~polynom(x, y, 5))
+plot(fit2015poly, main="Tendencia de eventos violentos en 2015, Modelo Polinomial de grado 5", se=FALSE)
+AIC(fit2015poly5)
 
 
